@@ -1,0 +1,98 @@
+Purchase Ticket
+  Endpoint: POST /purchase
+  Description: Purchase a ticket based on the provided request.
+  Request Body:
+    TicketPurchaseRequest: Details of the ticket purchase request.
+  Response:
+    TicketReceipt: Receipt containing details of the purchased ticket.
+  Status Codes:
+    200 OK: Successfully purchased the ticket.
+  Example:
+    POST /purchase
+    {
+    "from": "London",
+    "to": "France",
+    "user": {
+        "firstName": "Santanu",
+        "lastName": "Nandy",
+        "email": "santanu@gmail.com"
+    },
+    "price": "35"
+	}
+
+
+Get Receipt
+  Endpoint: GET /receipt/{emailId}
+  Description: Retrieve the ticket receipt for the provided email.
+  Path Parameters:
+    emailId: Email of the user to retrieve the receipt.
+  Response:
+    TicketReceipt: Receipt containing details of the ticket.
+  Status Codes:
+    200 OK: Successfully retrieved the receipt.
+    404 Not Found: Receipt not found for the provided email.
+  Example:
+    GET /receipt/santanu@gmail.com
+    {
+    "from": "London",
+    "to": "France",
+    "userName": "Santanu Nandy",
+    "pricePaid": 35.0,
+    "section": "B",
+    "seatNumber": 1
+	}
+
+
+Get Users By Section
+  Endpoint: GET /users/{section}
+  Description: Retrieve a map of users and their seats in the specified section.
+  Path Parameters:
+    section: Section for which users and seats are to be retrieved.
+  Response:
+    Map<String, Seat>: Map containing user email as key and their seat information as value.
+  Status Codes:
+    200 OK: Successfully retrieved the users and seats.
+    404 Not Found: No users found for the specified section.
+  Example:
+    GET /users/B
+    {
+    "B1": {
+        "section": "B",
+        "seatNumber": 1,
+        "occupied": true,
+        "occupieduseremailId": "santanu@gmail.com"
+    },
+
+
+Remove User
+  Endpoint: DELETE /remove/{emailId}
+  Description: Remove a user's ticket based on their email.
+  Path Parameters:
+    emailId: Email of the user to be removed.
+  Response:
+    String: Confirmation message.
+  Status Codes:
+    200 OK: Successfully removed the user.
+    404 Not Found: User not found for the provided email.
+  Example:
+    DELETE /remove/santanu@gmail.com
+
+
+
+Modify Seat
+  Endpoint: PUT /modify/{emailId}
+  Description: Modify a user's seat based on their email.
+  Path Parameters:
+    emailId: Email of the user whose seat is to be modified.
+  Request Body:
+    ModifySeatRequest: Details of the seat modification request.
+  Response:
+    String: Confirmation message.
+  Status Codes:
+    200 OK: Successfully modified the user's seat.
+  Example:
+    PUT /modify/santanu@gmail.com
+    {
+	   "section": "A",
+	   "seatNumber": "3"
+	}
