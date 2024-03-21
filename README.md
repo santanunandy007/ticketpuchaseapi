@@ -1,18 +1,78 @@
-# Getting Started
+# Ticket Purchase API
+This is a RESTful API built with Spring Boot 3.2.3 & Java 17 for managing ticket purchases.
 
-### Reference Documentation
-For further reference, please consider the following sections:
+## Features
+- Create, read, update, and delete operations for tickets
+- Error handling
+- Unit tests for endpoints and service classes
 
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/3.2.3/maven-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/3.2.3/maven-plugin/reference/html/#build-image)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/3.2.3/reference/htmlsingle/index.html#web)
-* [Spring Boot DevTools](https://docs.spring.io/spring-boot/docs/3.2.3/reference/htmlsingle/index.html#using.devtools)
+## Technologies Used
+- Java 17
+- Spring Boot 3.2.3
+- Maven for dependency management
+- JUnit and Mockito for testing
 
-### Guides
-The following guides illustrate how to use some features concretely:
+## Setup
+**Clone the repository:**
+git clone https://github.com/santanunandy007/ticketpuchaseapi.git
+cd ticketapi
+mvn clean install
+java -jar target/ticketapi-0.0.1-SNAPSHOT.jar
 
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
+## API Endpoints
+/ticket/purchase:
+  POST: Create a new ticket
+  RequestBody : 
+  {
+    "from": "London",
+    "to": "France",
+    "user": {
+        "firstName": "Santanu",
+        "lastName": "Nandy",
+        "email": "santanu@gmail.com"
+    },
+    "price": "35"
+  }
+  Response : Ticket Booked Successfully for user: santanu@gmail.com
 
+/tickets/receipt/{emailId}:
+  GET: Get a ticket deatails of user
+  Response : 
+  {
+    "from": "London",
+    "to": "France",
+    "userName": "Santanu Nandy",
+    "pricePaid": 35.0,
+    "section": "B",
+    "seatNumber": 1
+  }
+
+/tickets/users/{section}:
+  GET: Get seat deatils of section
+  Response : 
+  {
+    "B1": {
+        "section": "B",
+        "seatNumber": 1,
+        "occupied": true,
+        "occupieduseremailId": "santanu@gmail.com"
+    },
+    "B2": {
+        "section": "B",
+        "seatNumber": 2,
+        "occupied": false,
+        "occupieduseremailId": "Not Occupied"
+    },
+  }
+
+/tickets/modify/{emailId}:
+  PUT: Update a seat of user
+  RequestBody : 
+  {
+    "section": "A",
+    "seatNumber": "3"
+  }
+  Response : User's seat modified successfully.
+
+/tickets/remove/{emailId}:
+  DELETE: Delete a ticket for a user.
