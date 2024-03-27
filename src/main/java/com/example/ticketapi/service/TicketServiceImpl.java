@@ -33,7 +33,6 @@ public class TicketServiceImpl implements TicketService {
     // email address.
     Seat seat = trainService.allocateSeat(request.getPrice(), request.getUser().getEmail());
     Ticket ticket = new Ticket(request.getFrom(), request.getTo(), request.getUser(), request.getPrice(), seat);
-    ticket.setSeat(seat);
     trainService.addUser(ticket);
     return new TicketReceipt(ticket);
   }
